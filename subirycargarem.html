@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Editor de Mundo - Terraria</title>
+  <style>
+    body { background: #101010; color: white; font-family: sans-serif; text-align: center; padding: 40px; }
+    input, button { margin: 10px; padding: 10px; border-radius: 5px; }
+    .card { background: #222; padding: 20px; border-radius: 10px; display: inline-block; }
+  </style>
+</head>
+<body>
+  <h1>Editor de Mundo - Terraria</h1>
+  <div class="card">
+    <input type="file" id="fileInput" accept=".wld"><br>
+    <button onclick="leerMundo()">Leer Mundo</button>
+    <p id="resultado">Nombre del mundo: -</p>
+  </div>
+
+  <script>
+    let archivoMundo = null;
+
+    document.getElementById('fileInput').addEventListener('change', (e) => {
+      archivoMundo = e.target.files[0];
+    });
+
+    function leerMundo() {
+      if (!archivoMundo) {
+        alert("Primero selecciona un archivo .wld");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const data = new Uint8Array(e.target.result);
+        
+        // Offset de ejemplo para el nombre del mundo (esto puede variar)
+        const offset = 10;
+        const longitudNombre = 20; // Cantidad máxima de caracteres
+        let nombre = "";
+
+        for (let i = 0; i < longitudNombre; i++) {
+          const byte = data[offset + i];
+          if (byte === 0) break; // Fin del nombre
+          nombre += String.fromCharCode(byte);
+        }
+
+        document.getElementById('resultado').innerText = "Nombre del mundo: " + nombre;
+      };
+      reader.readAsArrayBuffer(archivoMundo);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Editor de Inventario</title>
+  <style>
+    body { background: #1e1e1e; color: white; font-family: sans-serif; text-align: center; padding: 40px; }
+    .inventario { display: grid; grid-template-columns: repeat(5, 60px); gap: 10px; justify-content: center; margin-bottom: 30px; }
+    .slot { width: 60px; height: 60px; background: #444; border: 2px solid #666; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+    .slot:hover { border-color: white; cursor: pointer; }
+    .items { margin-top: 20px; }
+    .item-btn { margin: 5px; padding: 10px 15px; background: #333; border: none; color: white; border-radius: 5px; cursor: pointer; }
+    .item-btn:hover { background: #555; }
+  </style>
+</head>
+<body>
+  <h1>Editor de Inventario</h1>
+
+  <div class="inventario" id="inventario">
+    <!-- Ranuras vacías -->
+  </div>
+
+  <div class="items">
+    <h2>Selecciona un ítem</h2>
+    <button class="item-btn" onclick="seleccionarItem('Espada')">Espada</button>
+    <button class="item-btn" onclick="seleccionarItem('Pico')">Pico</button>
+    <button class="item-btn" onclick="seleccionarItem('Poción')">Poción</button>
+    <button class="item-btn" onclick="seleccionarItem('Antorcha')">Antorcha</button>
+    <button class="item-btn" onclick="seleccionarItem('Vacío')">Vacío</button>
+  </div>
+
+  <p>Ítem seleccionado: <strong id="itemSeleccionado">ninguno</strong></p>
+
+  <script>
+    const inventario = [];
+    let itemActual = null;
+
+    // Generar slots
+    for (let i = 0; i < 10; i++) {
+      inventario.push(null);
+      const slot = document.createElement('div');
+      slot.className = 'slot';
+      slot.innerText = '[vacío]';
+      slot.onclick = () => asignarItem(i, slot);
+      document.getElementById('inventario').appendChild(slot);
+    }
+
+    function seleccionarItem(nombre) {
+      itemActual = nombre === 'Vacío' ? null : nombre;
+      document.getElementById('itemSeleccionado').innerText = itemActual || 'vacío';
+    }
+
+    function asignarItem(pos, slot) {
+      if (itemActual === null) {
+        inventario[pos] = null;
+        slot.innerText = '[vacío]';
+      } else {
+        inventario[pos] = itemActual;
+        slot.innerText = itemActual;
+      }
+    }
+  </script>
+</body>
+</html>

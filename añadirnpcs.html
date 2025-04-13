@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Editor de NPCs - Terraria</title>
+  <style>
+    body { background: #1b1b1b; color: white; font-family: sans-serif; text-align: center; padding: 40px; }
+    .formulario { margin-bottom: 30px; }
+    select, input, button {
+      padding: 10px; margin: 5px; border-radius: 6px; font-size: 16px;
+    }
+    table { margin: 0 auto; border-collapse: collapse; width: 60%; background: #2a2a2a; }
+    th, td { border: 1px solid #444; padding: 10px; }
+    th { background: #333; }
+  </style>
+</head>
+<body>
+  <h1>Editor de NPCs - Terraria</h1>
+
+  <div class="formulario">
+    <select id="npcSelect">
+      <option>Guía</option>
+      <option>Mercader</option>
+      <option>Enfermera</option>
+      <option>Demolicionista</option>
+      <option>Dryad</option>
+      <option>Hechicero</option>
+      <option>Estilista</option>
+      <option>Armero</option>
+      <option>Trufa</option>
+      <option>Zoologa</option>
+    </select>
+    <input type="number" id="posX" placeholder="X" min="0">
+    <input type="number" id="posY" placeholder="Y" min="0">
+    <button onclick="agregarNPC()">Agregar NPC</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>NPC</th>
+        <th>Posición X</th>
+        <th>Posición Y</th>
+      </tr>
+    </thead>
+    <tbody id="tablaNPCs">
+    </tbody>
+  </table>
+
+  <script>
+    function agregarNPC() {
+      const npc = document.getElementById("npcSelect").value;
+      const x = document.getElementById("posX").value;
+      const y = document.getElementById("posY").value;
+
+      if (x === "" || y === "") {
+        alert("Por favor ingresa coordenadas X e Y.");
+        return;
+      }
+
+      const fila = document.createElement("tr");
+      fila.innerHTML = `<td>${npc}</td><td>${x}</td><td>${y}</td>`;
+      document.getElementById("tablaNPCs").appendChild(fila);
+    }
+  </script>
+</body>
+</html>
